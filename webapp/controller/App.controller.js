@@ -1,106 +1,35 @@
-(function() {
+sap.ui.define([
+	"sap/ui/demo/nav/controller/BaseController"
+], function (BaseController) {
 	"use strict";
 
-	sap.ui.controller("jzhao.test.sample.controller.App", {
+	return BaseController.extend("sap.ui.demo.nav.controller.App", {
 
-		onInit: function() {
-			this.oModel = new sap.ui.model.json.JSONModel({
-				newTodo: "",
-				todos: [
-					{
-						title: "Start this app",
-						completed: true
-					},
-					{
-						title: "Learn OpenUI5",
-						completed: false
-					}
-				],
-				someCompleted: true,
-				completedCount: 1
+		onInit: function () {
+			// This is ONLY for being used within the tutorial.
+			// The default log level of the current running environment may be higher than INFO,
+			// in order to see the debug info in the console, the log level needs to be explicitly
+			// set to INFO here.
+			// But for application development, the log level doesn't need to be set again in the code.
+			jQuery.sap.log.setLevel(jQuery.sap.log.Level.INFO);
+
+			var oRouter = this.getRouter();
+
+			oRouter.attachBypassed(function (oEvent) {
+				var sHash = oEvent.getParameter("hash");
+				// do something here, i.e. send logging data to the backend for analysis
+				// telling what resource the user tried to access...
+				jQuery.sap.log.info("Sorry, but the hash '" + sHash + "' is invalid.", "The resource was not found.");
 			});
-			this.initEditable();
-			this.getView().setModel(this.oModel);
-			var oJSONModel = new sap.ui.model.json.JSONModel({
-				items: [
-					{
-						label: "Create",
-						key: "create-key"
-					},
-					{
-						label: "Delete",
-						key: "delete-key"
-					},
-					{
-						label: "Change",
-						key: "change-key"
-					}
-				]
+
+			oRouter.attachRouteMatched(function (oEvent){
+				var sRouteName = oEvent.getParameter("name");
+				// do something, i.e. send usage statistics to backend
+				// in order to improve our app and the user experience (Build-Measure-Learn cycle)
+				jQuery.sap.log.info("User accessed route " + sRouteName + ", timestamp = " + new Date().getTime());
 			});
-			this.getView().setModel(oJSONModel, "actions");
-			// this.getRoute("object").attachRouteMatched(this.onFunc);
-		},
-
-		initEditable: function() {
-			var oJSONModel = new sap.ui.model.json.JSONModel({
-				smartFieldEditable: false,
-				refObjectEditable: false
-			});
-			this.getView().setModel(oJSONModel, "viewConfigurations");
-		},
-
-		onFunc: function(oEvent) {
-			this.getModel("viewConfigurations").setProperty("/fieldControl", oResponse);
-		},
-
-		onActionPress: function(oEvent) {
-			var oButton = oEvent.getSource();
-			console.log(oButton.data("actionKey"));
-		},
-
-		addTodo: function() {
-			var aTodos = this.oModel.getObject("/todos");
-			aTodos.unshift({
-				title: this.oModel.getProperty("/newTodo"),
-				completed: false
-			});
-			this.oModel.setProperty("/newTodo", "");
-			this.oModel.refresh();
-		},
-
-		toggleCompleted: function() {
-			var iCompletedCount = 0;
-			var aTodos = this.oModel.getObject("/todos");
-			var i = aTodos.length;
-			while (i--) {
-				var oTodo = aTodos[i];
-				if (oTodo.completed) {
-					iCompletedCount++;
-				}
-			}
-			this.setCompletedCount(iCompletedCount);
-			this.oModel.refresh();
-		},
-
-		clearCompleted: function() {
-			var aTodos = this.oModel.getObject("/todos");
-			var i = aTodos.length;
-			while (i--) {
-				var oTodo = aTodos[i];
-				if (oTodo.completed) {
-					aTodos.splice(i, 1);
-				}
-			}
-			this.setCompletedCount(0);
-			this.oModel.refresh();
-		},
-
-		setCompletedCount: function(iCount) {
-			this.oModel.setProperty("/completedCount", iCount);
-			this.oModel.setProperty("/someCompleted", iCount > 0);
-			this.oModel.refresh();
 		}
 
 	});
 
-})();
+});

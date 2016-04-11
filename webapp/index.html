@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>TestSample</title>
-	<meta name="description" content="test sample UI5 application">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>TestSample</title>
+		<meta name="description" content="test sample UI5 application">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- Load the library stylesheets manually to stop flicker -->
-	<link rel="stylesheet" type="text/css" id="sap-ui-theme-sap.ui.core"
-		href="resources/sap/ui/core/themes/sap_bluecrystal/library.css" />
-	<link rel="stylesheet" type="text/css" id="sap-ui-theme-sap.m"
-		href="resources/sap/m/themes/sap_bluecrystal/library.css" />
+		<!-- Load the library stylesheets manually to stop flicker -->
+		<link rel="stylesheet" type="text/css" id="sap-ui-theme-sap.ui.core"
+			href="resources/sap/ui/core/themes/sap_bluecrystal/library.css" />
+		<link rel="stylesheet" type="text/css" id="sap-ui-theme-sap.m"
+			href="resources/sap/m/themes/sap_bluecrystal/library.css" />
 
-	<script id="sap-ui-bootstrap" type="text/javascript"
-		src="resources/sap-ui-core.js"
-		data-sap-ui-theme="sap_bluecrystal"
-		data-sap-ui-libs="sap.m"
-		data-sap-ui-rootComponent="jzhao.test.sample"
-		data-sap-ui-preload="async"
-		data-sap-ui-xx-componentPreload="async"
-		data-sap-ui-xx-bindingSyntax="complex"
-		data-sap-ui-xx-rootComponentNode="root"
-		data-sap-ui-resourceroots='{
-			"jzhao.test.sample": "./"
-		}'> /* endOfResourceroots */
-	</script>
+		<script id="sap-ui-bootstrap" type="text/javascript"
+			src="resources/sap-ui-core.js"
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-rootComponent="sap.ui.demo.nav"
+			data-sap-ui-preload="async"
+			data-sap-ui-xx-componentPreload="async"
+			data-sap-ui-xx-bindingSyntax="complex"
+			data-sap-ui-xx-rootComponentNode="root"
+			data-sap-ui-resourceroots='{
+				"sap.ui.demo.nav": "./"
+			}'> /* endOfResourceroots */
+		</script>
 
-</head>
-<body class="sapUiBody" id="root" role="application"></body>
+		<script>
+
+			sap.ui.getCore().attachInit(function () {
+				sap.ui.require([
+					"sap/ui/demo/nav/localService/mockserver",
+					"sap/m/Shell",
+					"sap/ui/core/ComponentContainer"
+				], function (mockserver, Shell, ComponentContainer) {
+					mockserver.init();
+					new Shell({
+						app: new ComponentContainer({
+							name: "sap.ui.demo.nav",
+							height: "100%"
+						})
+					}).placeAt("content");
+				});
+			});
+
+		</script>
+
+	</head>
+	<body class="sapUiBody" id="content">
+	</body>
 </html>

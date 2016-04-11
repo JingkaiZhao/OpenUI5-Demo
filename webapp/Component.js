@@ -1,11 +1,22 @@
-sap.ui.core.UIComponent.extend("jzhao.test.sample.Component", {
-	metadata: {
-		name: "TestSample",
-		version: "1.0.0",
-		includes: ["css/styles.css"],
-		dependencies: {
-			libs: ["sap.m"]
+sap.ui.define([
+	"sap/ui/core/UIComponent"
+], function (UIComponent) {
+	"use strict";
+
+	return UIComponent.extend("sap.ui.demo.nav.Component", {
+
+		metadata: {
+			manifest: "json"
 		},
-		rootView: "jzhao.test.sample.view.App"
-	}
+
+		init: function () {
+			// call the init function of the parent
+			UIComponent.prototype.init.apply(this, arguments);
+
+			// create the views based on the url/hash
+			this.getRouter().initialize();
+		}
+
+	});
+
 });
