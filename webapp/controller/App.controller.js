@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
 
-	sap.ui.controller("jzhao.test.sample.view.App", {
+	sap.ui.controller("jzhao.test.sample.controller.App", {
 
 		onInit: function() {
 			this.oModel = new sap.ui.model.json.JSONModel({

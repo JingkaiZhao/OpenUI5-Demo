@@ -1,0 +1,132 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  controllerName="jzhao.test.sample.controller.Main"
+  resourceBundleName="jzhao.test.sample.i18n.messageBundle"
+  resourceBundleAlias="i18n"
+  displayBlock="true">
+  <Page title="{i18n>TITLE}" backgroundDesign="Solid">
+    <content>
+      <IconTabBar
+        id="idIconTabBarNoIcons"
+        expanded="true"
+        class="sapUiResponsiveContentPadding">
+        <items>
+          <IconTabFilter
+            text="ToDo List">
+            <Input class="todoInput" value="{/newTodo}" placeholder="{i18n>INPUT_PLACEHOLDER}" change="addTodo" />
+            <List id="todo-list" items="{/todos}" select="toggleCompleted"
+              mode="MultiSelect"
+              growing="true"
+              growingScrollToLoad="true"
+              showNoData="false"
+              showSeparators="None"
+              rememberSelections="false">
+              <CustomListItem selected="{completed}">
+                <Input class="todoListInput" value="{title}" />
+              </CustomListItem>
+            </List>
+          </IconTabFilter>
+          <IconTabFilter
+            text="Dynamic Actions">
+            <Table>
+              <headerToolbar>
+                <Toolbar>
+                  <Text text="ChangeRecords(10)" />
+
+                  <Button text="Other" />
+                  <Button text="Other" />
+
+                  <HBox id="actionContainer" items="{actions>/items}">
+                    <items>
+                      <Button text="{actions>label}" press="onActionPress">
+                        <customData>
+                          <core:CustomData key="actionKey" value="{actions>key}" />
+                        </customData>
+                      </Button>
+                    </items>
+                  </HBox>
+                </Toolbar>
+              </headerToolbar>
+              <columns>
+                <Column>
+                  <Label text="ChangeRecord" />
+                </Column>
+                <Column>
+                  <Label text="ChangeRecordType" />
+                </Column>
+                <Column>
+                  <Label text="ChangeRecordStatus" />
+                </Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="1000001" />
+                    <Text text="QKD" />
+                    <Text text="59" />
+                  </cells>
+                </ColumnListItem>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="1000002" />
+                    <Text text="KDN" />
+                    <Text text="59" />
+                  </cells>
+                </ColumnListItem>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="1000003" />
+                    <Text text="PDO" />
+                    <Text text="59" />
+                  </cells>
+                </ColumnListItem>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="1000004" />
+                    <Text text="ODN" />
+                    <Text text="59" />
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter
+            text="Form">
+            <f:SimpleForm id="SimpleFormDisplay354"
+              minWidth="1024"
+              maxContainerCols="2"
+              editable="false"
+              layout="ResponsiveGridLayout"
+              title="Address"
+              labelSpanL="3"
+              labelSpanM="3"
+              emptySpanL="4"
+              emptySpanM="4"
+              columnsL="1"
+              columnsM="1">
+              <f:content>
+                <Label text="Name" labelFor="name-text" required="true" />
+                <Text id="name-text" text="Dailin" />
+              </f:content>
+            </f:SimpleForm>
+          </IconTabFilter>
+          <IconTabFilter
+            text="Placeholder">
+            <Text text="People content goes here ..." />
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+
+    </content>
+    <footer>
+      <Bar>
+        <contentMiddle>
+          <Button visible="{/someCompleted}" icon="sap-icon://delete" text="Clear completed ({/completedCount})" press="clearCompleted" />
+        </contentMiddle>
+      </Bar>
+    </footer>
+  </Page>
+</mvc:View>
